@@ -1,0 +1,87 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>ImageMagick API by hackerhasid</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>ImageMagick API</h1>
+        <p>Modify images from anywhere via a super simple API</p>
+        <p class="view"><a href="https://github.com/hackerhasid/imagemagickapi.com">View the Project on GitHub <small>hackerhasid/imagemagickapi.com</small></a></p>
+        <ul>
+          <li><a href="https://github.com/hackerhasid/imagemagickapi.com/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/hackerhasid/imagemagickapi.com/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/hackerhasid/imagemagickapi.com">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>
+<a id="accepts-multiple-formats" class="anchor" href="#accepts-multiple-formats" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Accepts multiple formats</h3>
+
+<p>All endpoints accept <code>application/json</code> or <code>application/x-www-form-urlencoded</code>. When posting as <code>application/json</code> input files can be specified as base64 encoded or as an external URL. When posting as <code>application/x-www-form-urlencoded</code> input files are posted as file fields strings representing external URLs.</p>
+
+<h3>
+<a id="common-tasks-are-wrapped-in-helpers" class="anchor" href="#common-tasks-are-wrapped-in-helpers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Common tasks are wrapped in helpers</h3>
+
+<pre><code>POST /annotateSimple HTTP/1.1
+Accept: application/json
+Content-Length: 207
+Content-Type: application/json
+
+{
+    "text": "Hello World",
+    "color": "Green",
+    "font": "Times New Roman",
+    "size": "12pt",
+    "where": "100x100",
+    "input": "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGA"
+}
+</code></pre>
+
+<h3>
+<a id="direct-access-to-imagemagick-via-http" class="anchor" href="#direct-access-to-imagemagick-via-http" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Direct access to ImageMagick via HTTP</h3>
+
+<p>Access ImageMagick command line tools simply:</p>
+
+<blockquote>
+<p>montage -background '#336699' -geometry +4+4 rose.jpg red-ball.png montage.jpg</p>
+</blockquote>
+
+<p>is recreated like:</p>
+
+<pre><code>POST /motage HTTP/1.1
+Accept: application/json
+Content-Length: 133
+Content-Type: application/json
+
+{
+    "args": "-background #336699 -geometry +4+4",
+    "input": [
+        "iVBORw0KGgo...",
+        "NSUhEUgAAAI...",
+        "ADDPmHLEUgA..."
+    ]
+}
+</code></pre>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/hackerhasid">hackerhasid</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+    
+  </body>
+</html>
