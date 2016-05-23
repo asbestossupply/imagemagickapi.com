@@ -1,0 +1,41 @@
+swagger: '2.0'
+info:
+  version: "0.0.1"
+  title: ImageMagick API
+paths:
+  /convert:
+    post:
+      description: calls the `convert` command line tool
+      consumes:
+        - application/json
+        - multipart/form-data
+      produces:
+        - application/json
+      responses:
+        202:
+          description: queued
+          schema:
+            title:  id
+            type: integer
+    parameters:
+      - name: command
+        in: body
+        description: the command to call
+        schema:
+          $ref: '#/definitions/command'
+
+definitions:
+  image:
+    type: string
+    description: a url or base64 encoded image
+  command:
+    type: object
+    properties:
+      args:
+        description: the command line arguments (aside from input/output files)
+        type: string
+      input:
+        description: input files
+        type: array
+        items:
+          $ref: '#/definitions/image'
