@@ -1,57 +1,133 @@
-<!doctype html>
-<html>
+<!DOCTYPE html>
+<html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta charset="UTF-8">
     <title>ImageMagick API by hackerhasid</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/github-dark.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
   </head>
   <body>
-    <div class="wrapper">
-      <header>
-        <h1>ImageMagick API</h1>
-        <p>Modify images from anywhere via a super simple API</p>
-        <p class="view"><a href="https://github.com/hackerhasid/imagemagickapi.com">View the Project on GitHub <small>hackerhasid/imagemagickapi.com</small></a></p>
-        <ul>
-          <li><a href="https://github.com/hackerhasid/imagemagickapi.com/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/hackerhasid/imagemagickapi.com/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/hackerhasid/imagemagickapi.com">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-        <blockquote>
-<p>Preface: ImageMagicAPI.com is not associated with ImageMagick Studio LLC - the makers of the ImageMagick tools - in any way</p>
-</blockquote>
+    <section class="page-header">
+      <h1 class="project-name">ImageMagick API</h1>
+      <h2 class="project-tagline">Modify images from anywhere via a super simple API</h2>
+      <a href="https://github.com/hackerhasid/imagemagickapi.com" class="btn">View on GitHub</a>
+      <a href="https://github.com/hackerhasid/imagemagickapi.com/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/hackerhasid/imagemagickapi.com/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <p><em><strong>ImageMagicAPI.com is not associated with ImageMagick Studio LLC - the makers of the ImageMagick tools - in any way</strong></em></p>
 
 <hr>
 
-<h3>
-<a id="accepts-multiple-formats" class="anchor" href="#accepts-multiple-formats" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Accepts multiple formats</h3>
+<h1>
+<a id="accepts-multiple-formats" class="anchor" href="#accepts-multiple-formats" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Accepts multiple formats</h1>
 
-<p>All endpoints accept <code>application/json</code> or <code>application/x-www-form-urlencoded</code>. When posting as <code>application/json</code> input files can be specified as base64 encoded or as an external URL. When posting as <code>application/x-www-form-urlencoded</code> input files are posted as file fields strings representing external URLs.</p>
+<p>Input files can be specified as base64 encoded strings or as an external URL</p>
 
-<h3>
-<a id="common-tasks-are-wrapped-in-helpers" class="anchor" href="#common-tasks-are-wrapped-in-helpers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Common tasks are wrapped in helpers</h3>
+<h1>
+<a id="common-tasks-are-wrapped-in-helpers" class="anchor" href="#common-tasks-are-wrapped-in-helpers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Common tasks are wrapped in helpers</h1>
 
-<pre><code>POST /annotateSimple HTTP/1.1
+<h2>
+<a id="resize" class="anchor" href="#resize" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>/resize</h2>
+
+<h5>
+<a id="arguments" class="anchor" href="#arguments" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arguments</h5>
+
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>input</td>
+<td>base64 encoded string OR URI</td>
+<td>the input file</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>width</td>
+<td>integer</td>
+<td>the output width</td>
+<td>you must specify either <em>width</em> or <em>height</em> (or both)</td>
+</tr>
+<tr>
+<td>height</td>
+<td>integer</td>
+<td>the output height</td>
+<td>see <em>width</em>
+</td>
+</tr>
+<tr>
+<td>quality</td>
+<td>decimal</td>
+<td>output quality</td>
+<td>N</td>
+</tr>
+<tr>
+<td>srcFormat</td>
+<td>string</td>
+<td>format of input file (e.g. JPG)</td>
+<td>N</td>
+</tr>
+<tr>
+<td>format</td>
+<td>string</td>
+<td>format of output file (e.g. PNG)</td>
+<td>N</td>
+</tr>
+<tr>
+<td>progressive</td>
+<td>boolean</td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td>strip</td>
+<td>boolean</td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td>filter</td>
+<td>string</td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td>sharpening</td>
+<td>decimal</td>
+<td></td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+
+<h5>
+<a id="example" class="anchor" href="#example" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h5>
+
+<pre><code>POST /resize HTTP/1.1
 Accept: application/json
 Content-Length: 207
 Content-Type: application/json
-
 {
-    "text": "Hello World",
-    "color": "Green",
-    "font": "Times New Roman",
-    "size": "12pt",
-    "where": "100x100",
+    "width": "100",
+    "height": "100",
+    "quality": 0.8,
+    "srcFormat": "jpg",
+    "format": "png",
+    "progressive": false,
+    "strip": true,
+    "filter": "Lagrange",
+    "sharpening": 0.2,
     "input": "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGA"
 }
 </code></pre>
@@ -79,13 +155,15 @@ Content-Type: application/json
     ]
 }
 </code></pre>
-      </section>
-    </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/hackerhasid">hackerhasid</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/hackerhasid/imagemagickapi.com">ImageMagick API</a> is maintained by <a href="https://github.com/hackerhasid">hackerhasid</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
   </body>
 </html>
