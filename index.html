@@ -29,6 +29,14 @@
 <p>Input files can be specified as base64 encoded strings or as an external URL</p>
 
 <h1>
+<a id="output" class="anchor" href="#output" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Output</h1>
+
+<p>every API call returns the same output format:</p>
+
+<pre><code>{ "id": "http://www...." }
+</code></pre>
+
+<h1>
 <a id="common-tasks-are-wrapped-in-helpers" class="anchor" href="#common-tasks-are-wrapped-in-helpers" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Common tasks are wrapped in helpers</h1>
 
 <h2>
@@ -116,7 +124,6 @@
 
 <pre><code>POST /resize HTTP/1.1
 Accept: application/json
-Content-Length: 207
 Content-Type: application/json
 {
     "width": "100",
@@ -132,27 +139,155 @@ Content-Type: application/json
 }
 </code></pre>
 
-<h3>
-<a id="direct-access-to-imagemagick-via-http" class="anchor" href="#direct-access-to-imagemagick-via-http" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Direct access to ImageMagick via HTTP</h3>
+<h2>
+<a id="crop" class="anchor" href="#crop" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>/crop</h2>
 
-<p>Access ImageMagick command line tools simply:</p>
+<h5>
+<a id="arguments-1" class="anchor" href="#arguments-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arguments</h5>
 
-<p><code>montage -background '#336699' -geometry +4+4 rose.jpg red-ball.png montage.jpg</code></p>
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>input</td>
+<td>base64 encoded string OR URI</td>
+<td>the input file</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>width</td>
+<td>integer</td>
+<td>the output width</td>
+<td>you must specify either <em>width</em> or <em>height</em> (or both)</td>
+</tr>
+<tr>
+<td>height</td>
+<td>integer</td>
+<td>the output height</td>
+<td>see <em>width</em>
+</td>
+</tr>
+<tr>
+<td>quality</td>
+<td>decimal</td>
+<td>output quality</td>
+<td>N</td>
+</tr>
+<tr>
+<td>srcFormat</td>
+<td>string</td>
+<td>format of input file (e.g. JPG)</td>
+<td>N</td>
+</tr>
+<tr>
+<td>format</td>
+<td>string</td>
+<td>format of output file (e.g. PNG)</td>
+<td>N</td>
+</tr>
+<tr>
+<td>progressive</td>
+<td>boolean</td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td>strip</td>
+<td>boolean</td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td>filter</td>
+<td>string</td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td>sharpening</td>
+<td>decimal</td>
+<td></td>
+<td>N</td>
+</tr>
+<tr>
+<td>gravity</td>
+<td>string</td>
+<td>one of {NorthWest, North, NorthEast, West, Center, East, SouthWest, South, SouthEast}</td>
+<td>N (defaults to Center)</td>
+</tr>
+</tbody>
+</table>
 
-<p>is recreated like:</p>
+<h5>
+<a id="example-1" class="anchor" href="#example-1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h5>
 
-<pre><code>POST /motage HTTP/1.1
+<pre><code>POST /crop HTTP/1.1
 Accept: application/json
-Content-Length: 133
 Content-Type: application/json
-
 {
-    "args": "-background #336699 -geometry +4+4",
-    "input": [
-        "iVBORw0KGgo...",
-        "NSUhEUgAAAI...",
-        "ADDPmHLEUgA..."
-    ]
+    "width": "100",
+    "height": "100",
+    "quality": 0.8,
+    "srcFormat": "jpg",
+    "format": "png",
+    "progressive": false,
+    "strip": true,
+    "filter": "Lagrange",
+    "sharpening": 0.2,
+    "input": "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGA"
+}
+</code></pre>
+
+<h1>
+<a id="direct-access-to-imagemagick-via-http" class="anchor" href="#direct-access-to-imagemagick-via-http" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Direct access to ImageMagick via HTTP</h1>
+
+<h2>
+<a id="convert" class="anchor" href="#convert" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>/convert</h2>
+
+<h5>
+<a id="arguments-2" class="anchor" href="#arguments-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Arguments</h5>
+
+<table>
+<thead>
+<tr>
+<th>name</th>
+<th>type</th>
+<th>description</th>
+<th>required?</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>input</td>
+<td>base64 encoded string OR URI</td>
+<td>the input file</td>
+<td>Y</td>
+</tr>
+<tr>
+<td>args</td>
+<td>array</td>
+<td>arguments to pass (see <a href="http://imagemagick.org/script/command-line-processing.php#option">http://imagemagick.org/script/command-line-processing.php#option</a>)</td>
+<td>N</td>
+</tr>
+</tbody>
+</table>
+
+<h5>
+<a id="example-2" class="anchor" href="#example-2" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Example</h5>
+
+<pre><code>POST / HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+{
+    "input": "iVBORw0KGgoAAAANSUhEUgAAAIAAAACACAYAAADDPmHLAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGA",
+    "args": ['-resize', '25x120']
 }
 </code></pre>
 
